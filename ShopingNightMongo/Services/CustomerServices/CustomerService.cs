@@ -10,7 +10,7 @@ namespace ShopingNightMongo.Services.CustomerServices
     {
         private readonly IMapper _mapper;
         private readonly IMongoCollection<Customer> _customerCollection;
-        public CustomerService(IMapper mapper,IDatabaseSettings _databaseSettings)
+        public CustomerService(IMapper mapper, IDatabaseSettings _databaseSettings)
         {
             var client = new MongoClient(_databaseSettings.ConnectionString);
             var database = client.GetDatabase(_databaseSettings.DatabaseName);
@@ -18,7 +18,7 @@ namespace ShopingNightMongo.Services.CustomerServices
             _mapper = mapper;
         }
 
-        
+
         public async Task CreateCustomerAsync(CreateCustomerDto createCustomerDto)
         {
             var value = _mapper.Map<Customer>(createCustomerDto);
@@ -27,17 +27,19 @@ namespace ShopingNightMongo.Services.CustomerServices
 
         public async Task DeleteCustomerAsync(string customerId)
         {
-            await _customerCollection.DeleteOneAsync(customerId);
+            await _customerCollection.DeleteOneAsync(x => x.CustomerId == customerId);
         }
 
-        public Task<List<ResultCustomerDto>> GetAllCustomersAsync()
+        public async Task<List<ResultCustomerDto>> GetAllCustomersAsync()
         {
-            throw new NotImplementedException();
+            var values = await _customerCollection.Find(x => true).ToListAsync();
+            return _mapper.Map<List<ResultCustomerDto>>(values);
         }
 
-        public Task<GetCustomerByIdDto> GetCustomerByIdAsync(string customerId)
+        public async Task<GetCustomerByIdDto> GetCustomerByIdAsync(string customerId)
         {
-            throw new NotImplementedException();
+            var value = await _customerCollection.Find(x => x.CustomerId == customerId).FirstOrDefaultAsync();
+            return _mapper.Map<GetCustomerByIdDto>(value);
         }
 
         public async Task UpdateCustomerAsync(UpdateCustomerDto updateCustomerDto)

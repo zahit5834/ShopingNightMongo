@@ -1,0 +1,19 @@
+﻿@model ShopingNightMongo.Dtos.GaleryDtos.GetGaleryDto
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container">
+    <form method="post">
+        <input type="hidden" asp-for=GaleryId/>
+        <label>Başlık:</label>
+        <input type="text" asp-for="GaleryTitle" class="form-control" />
+        <br />
+        <label>Alt Başlık:</label>
+        <input type="text" asp-for="GalerySubtitle" class="form-control" />
+        <br />
+        <label>Görsel Url:</label>
+        <input type="text" asp-for="ImageUrl" class="form-control" />
+        <br />
+        <button class="btn btn-info">Galeri Kartı Güncelle</button>
+    </form>
+</div>

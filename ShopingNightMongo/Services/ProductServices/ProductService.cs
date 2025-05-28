@@ -10,12 +10,16 @@ namespace ShopingNightMongo.Services.ProductServices
     {
         private readonly IMapper _mapper;
         private readonly IMongoCollection<Product> _productCollection;
+        private readonly IMongoCollection<Category> _categoryCollection;
         public ProductService(IMapper mapper, IDatabaseSettings _databaseSettings)
         {
             var client = new MongoClient(_databaseSettings.ConnectionString);
             var database = client.GetDatabase(_databaseSettings.DatabaseName);
             _productCollection = database.GetCollection<Product>(_databaseSettings.ProductCollectionName);
             _mapper = mapper;
+            var categoryDatabase = client.GetDatabase(_databaseSettings.DatabaseName);
+            _categoryCollection = categoryDatabase.GetCollection<Category>(_databaseSettings.CategoryCollectionName);
+            
         }
 
         public async Task CreateProductAsync(CreateProductDto createProductDto)
@@ -29,14 +33,27 @@ namespace ShopingNightMongo.Services.ProductServices
             await _productCollection.DeleteOneAsync(x => x.ProductId == id);
         }
 
-        public Task<List<ResultProductDto>> GetAllProductAsync()
+        public async Task<List<ResultProductDto>> GetAllProductAsync()
         {
-            throw new NotImplementedException();
+            var products = await _productCollection.Find(x => true).ToListAsync();
+            if (products.Any())
+            {
+                var CategoryIds = products.Select(x => x.CategoryId).ToList();
+                var categories = await _categoryCollection.Find(x => CategoryIds.Contains(x.CategoryId)).ToListAsync();
+                foreach (var product in products)
+                {
+                    var s= categories.FirstOrDefault(c => c.CategoryId == product.CategoryId);
+                    product.CategoryName= s.CategoryName;
+                }
+            }
+            return _mapper.Map<List<ResultProductDto>>(products);
+
         }
 
-        public Task<GetProductByIdDto> GetProductByIdAsync(string id)
+        public async Task<GetProductByIdDto> GetProductByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var value = await _productCollection.Find(x => x.ProductId == id).FirstOrDefaultAsync();
+            return _mapper.Map<GetProductByIdDto>(value);
         }
 
         public async Task UpdateProductAsync(UpdateProductDto updateProductDto)

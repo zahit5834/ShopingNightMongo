@@ -1,0 +1,26 @@
+﻿@model List<ShopingNightMongo.Dtos.GaleryDtos.ResultGaleryDto>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container">
+    <table class="table table-hover">
+        <tr>
+            <th>#</th>
+            <th>Başlık</th>
+            <th>Alt Başlık</th>
+            <th>Sil</th>
+            <th>Güncelle</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.GaleryId</td>
+                <td>@item.GaleryTitle</td>
+                <td>@item.GalerySubtitle</td>
+                <td><a href="/Galery/DeleteGalery/@item.GaleryId" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Galery/UpdateGalery/@item.GaleryId" class="btn btn-warning">Güncelle</a></td>
+            </tr>
+        }
+    </table>
+    <a href="/Galery/CreateGalery/" class="btn btn-primary">Yeni Galeri Kartı Ekle</a>
+</div>

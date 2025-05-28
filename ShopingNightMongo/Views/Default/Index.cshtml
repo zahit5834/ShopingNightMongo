@@ -1,0 +1,31 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+@await Component.InvokeAsync("_DefaultHeaderComponentPartial")
+<body class="animsition">
+	<!-- Header -->
+	@await Component.InvokeAsync("_DefaultNavbarComponentPartial")
+	<!-- Görsel -->
+	@await Component.InvokeAsync("_DefaultGaleryComponentPartial")
+	<!-- Kategoriler-->
+	@await Component.InvokeAsync("_DefaultCategoriesComponentPartial")
+	<!-- Ürün -->
+	@await Component.InvokeAsync("_DefaultProductsComponentPartial")
+	<!-- Footer -->
+	@await Component.InvokeAsync("_DefaultFooterComponentPartial")
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+	<!-- Modal1 -->
+	@await Component.InvokeAsync("_DefaultModalComponentPartial")
+	<!-- Scripts -->
+	@await Component.InvokeAsync("_DefaultScriptsComponentPartial")
+</body>
+</html>

@@ -7,5 +7,7 @@
         public string CategoryCollectionName { get; set; }
         public string ProductCollectionName { get; set; }
         public string CustomerCollectionName { get; set; }
+        public string GaleryCollectionName { get; set; }
+        public string ProductImageCollectionName { get; set; }
     }
 }

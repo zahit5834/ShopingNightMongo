@@ -1,0 +1,31 @@
+﻿@model ShopingNightMongo.Dtos.ProductDtos.CreateProductDto
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container">
+    <form method="post">
+        <label>Ürün Adı:</label>
+        <input type="text" asp-for="ProductName" class="form-control" />
+        <br />
+        <label>Ürün Fiyatı:</label>
+        <input type="text" asp-for="ProductPrice" class="form-control" />
+        <br />
+        <label>Ürün Açıklaması:</label>
+        <input type="text" asp-for="ProductDescription" class="form-control" />
+        <br />
+        <label>Ürün Görseli:</label>
+        <input type="text" asp-for="ImageUrl" class="form-control" />
+        <br />
+        <label>Ürün Stok Sayısı:</label>
+        <input type="text" asp-for="StockCount" class="form-control" />
+        <br />
+        <label>Ürün Kategorisi:</label>
+        <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.v">
+            <option value="">-----Seçiniz------</option>
+        </select>
+        <br />
+        <button class="btn btn-info">Kategori Ekle</button>
+    </form>
+</div>

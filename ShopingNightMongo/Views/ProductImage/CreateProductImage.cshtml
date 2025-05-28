@@ -1,0 +1,18 @@
+﻿@model ShopingNightMongo.Dtos.ProductImageDtos.CreateProductImageDto
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container">
+    <form method="post">
+        <label>Ürün Adı:</label>
+        <select asp-for="ProductId" class="form-control" asp-items="@ViewBag.v">
+            <option value="">---- Ürün Seçin ----</option>
+        </select>
+        <br />
+        <label>Görsel Url:</label>
+        <input type="text" asp-for="ImageUrl" class="form-control" />
+        <br />
+        <button class="btn btn-info">Ekle</button>
+    </form>
+</div>
+

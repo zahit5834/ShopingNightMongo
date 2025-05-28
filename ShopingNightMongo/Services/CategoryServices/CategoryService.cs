@@ -19,7 +19,6 @@ namespace ShopingNightMongo.Services.CategoryServices
             _mapper = mapper;
         }
 
-        
         public async Task CreateCategoryAsync(CreateCategoryDto createCategoryDto)
         {
             var value = _mapper.Map<Category>(createCategoryDto);
@@ -28,17 +27,19 @@ namespace ShopingNightMongo.Services.CategoryServices
 
         public async Task DeleteCategoryAsync(string id)
         {
-            await _categoryCollection.DeleteOneAsync(id);
+            await _categoryCollection.DeleteOneAsync(x=> x.CategoryId==id);
         }
 
-        public Task<List<ResultCategoryDto>> GetAllCategories()
+        public async Task<List<ResultCategoryDto>> GetAllCategoryAsync()
         {
-            throw new NotImplementedException();
+            var values = await _categoryCollection.Find(x => true).ToListAsync();
+            return _mapper.Map<List<ResultCategoryDto>>(values);
         }
 
-        public Task<GetCategoryDto> GetCategoryByIdAsync(string id)
+        public async Task<GetCategoryDto> GetCategoryByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var value = await _categoryCollection.Find(x => x.CategoryId == id).FirstOrDefaultAsync();
+            return _mapper.Map<GetCategoryDto>(value);
         }
 
         public async Task UpdateCategoryAsync(UpdateCategoryDto updateCategoryDto)
