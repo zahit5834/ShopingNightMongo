@@ -26,7 +26,7 @@ namespace ShopingNightMongo.Controllers
 
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("mehmetzahir5834@gmail.com", "zsxb dclg wmvu fbup");
+            smtp.Authenticate("mehmetzahir5834@gmail.com", "smtp Key");
             smtp.Send(email);
             smtp.Disconnect(true);
 
